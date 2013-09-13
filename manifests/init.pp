@@ -130,30 +130,51 @@
 #
 # - *Default*: "# This file is being maintained by Puppet.\n# DO NOT EDIT\n"
 #
+# sshd_strict_modes
+# -----------------------
+# The StrictModes setting in sshd_config
+#
+# - *Default*: "yes"
+#
+# sshd_password_authentication
+# -----------------------
+# The PasswordAuthentication setting in sshd_config
+#
+# - *Default*: "yes"
+#
+# sshd_challenge_response_authentication
+# -----------------------
+# The ChallengeResponseAuthentication setting in sshd_config
+#
+# - *Default*: "no"
+#
 class ssh (
-  $packages                = ['openssh-server',
-                              'openssh-server',
-                              'openssh-clients'],
-  $permit_root_login       = 'no',
-  $purge_keys              = 'true',
-  $manage_firewall         = false,
-  $ssh_config_path         = '/etc/ssh/ssh_config',
-  $ssh_config_owner        = 'root',
-  $ssh_config_group        = 'root',
-  $ssh_config_mode         = '0644',
-  $sshd_config_path        = '/etc/ssh/sshd_config',
-  $sshd_config_owner       = 'root',
-  $sshd_config_group       = 'root',
-  $sshd_config_mode        = '0600',
-  $service_ensure          = 'running',
-  $service_name            = 'sshd',
-  $service_enable          = 'true',
-  $service_hasrestart      = 'true',
-  $service_hasstatus       = 'true',
-  $ssh_key_ensure          = 'present',
-  $ssh_key_type            = 'ssh-rsa',
-  $manage_root_ssh_config  = 'false',
-  $root_ssh_config_content = "# This file is being maintained by Puppet.\n# DO NOT EDIT\n",
+  $packages                               = ['openssh-server',
+                                             'openssh-server',
+                                             'openssh-clients'],
+  $permit_root_login                      = 'no',
+  $purge_keys                             = 'true',
+  $manage_firewall                        = false,
+  $ssh_config_path                        = '/etc/ssh/ssh_config',
+  $ssh_config_owner                       = 'root',
+  $ssh_config_group                       = 'root',
+  $ssh_config_mode                        = '0644',
+  $sshd_config_path                       = '/etc/ssh/sshd_config',
+  $sshd_config_owner                      = 'root',
+  $sshd_config_group                      = 'root',
+  $sshd_config_mode                       = '0600',
+  $service_ensure                         = 'running',
+  $service_name                           = 'sshd',
+  $service_enable                         = 'true',
+  $service_hasrestart                     = 'true',
+  $service_hasstatus                      = 'true',
+  $ssh_key_ensure                         = 'present',
+  $ssh_key_type                           = 'ssh-rsa',
+  $manage_root_ssh_config                 = 'false',
+  $root_ssh_config_content                = "# This file is being maintained by Puppet.\n# DO NOT EDIT\n",
+  $sshd_strict_modes                      = "yes",
+  $sshd_password_authentication           = "yes",
+  $sshd_challenge_response_authentication = "no",
 ) {
 
   case $permit_root_login {
@@ -183,6 +204,31 @@ class ssh (
     }
     default: {
       fail("purge_keys must be 'true' or 'false' and is ${purge_keys}")
+    }
+  }
+
+  case $sshd_strict_modes {
+    'yes', 'no': {
+      # noop
+    }
+    default: {
+      fail("sshd_strict_modes must be 'yes' or 'no' and is ${sshd_strict_modes}")
+    }
+  }
+  case $sshd_passsword_authentication {
+    'yes', 'no': {
+      # noop
+    }
+    default: {
+      fail("sshd_passsword_authentication must be 'yes' or 'no' and is ${sshd_strict_modes}")
+    }
+  }
+  case $sshd_challenge_response_authentication {
+    'yes', 'no': {
+      # noop
+    }
+    default: {
+      fail("sshd_challenge_response_authentication must be 'yes' or 'no' and is ${sshd_strict_modes}")
     }
   }
 

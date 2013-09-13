@@ -138,3 +138,21 @@ root_ssh_config_content
 Content of root's ~/.ssh/config.
 
 - *Default*: "# This file is being maintained by Puppet.\n# DO NOT EDIT\n"
+sshd_strict_modes
+-----------------------
+The StrictModes setting in sshd_config
+
+- *Default*: "yes"
+
+sshd_password_authentication
+-----------------------
+The PasswordAuthentication setting in sshd_config
+
+- *Default*: "yes"
+
+sshd_challenge_response_authentication
+-----------------------
+The ChallengeResponseAuthentication setting in sshd_config
+
+- *Default*: "no"
+

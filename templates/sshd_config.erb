@@ -40,7 +40,7 @@ SyslogFacility AUTHPRIV
 
 #LoginGraceTime 2m
 PermitRootLogin <%= @permit_root_login %>
-#StrictModes yes
+StrictModes <%= @sshd_strics_modes %>
 #MaxAuthTries 6
 
 #RSAAuthentication yes
@@ -58,13 +58,10 @@ PermitRootLogin <%= @permit_root_login %>
 #IgnoreRhosts yes
 
 # To disable tunneled clear text passwords, change to no here!
-#PasswordAuthentication yes
-#PermitEmptyPasswords no
-PasswordAuthentication yes
+PasswordAuthentication <%= @sshd_password_authentication %>
 
 # Change to no to disable s/key passwords
-#ChallengeResponseAuthentication yes
-ChallengeResponseAuthentication no
+ChallengeResponseAuthentication <%= @sshd_challenge_response_authentication %>
 
 # Kerberos options
 #KerberosAuthentication no
@@ -73,9 +70,7 @@ ChallengeResponseAuthentication no
 #KerberosGetAFSToken no
 
 # GSSAPI options
-#GSSAPIAuthentication no
 GSSAPIAuthentication yes
-#GSSAPICleanupCredentials yes
 GSSAPICleanupCredentials yes
 
 # Set this to 'yes' to enable PAM authentication, account processing,
